@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Label;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -176,48 +177,59 @@ public class HormigaPanel extends JPanel implements ActionListener {
         lblTotalReg.setText(id.toString() + " de " + idMax.toString());
     }
     private void showDataTable() throws Exception {
-        String[] header = {"IdHormiga", "Tipo","Sexo", "Estado", "Nombre"};
-        Object[][] data = new Object[oHormiga.getAll().size()][5];
+        // Obtén la lista de datos
+        List<HormigaDTO> lista = oHormiga.getAll();
+        
+        // Definir encabezados
+        String[] header = {"IdHormiga", "Tipo", "Sexo", "Estado", "Nombre"};
+        
+        // Crear el arreglo de datos usando el tamaño de la lista
+        Object[][] data = new Object[lista.size()][header.length];
         int index = 0;
-        for (HormigaDTO o : oHormiga.getAll()) {
-            data[index][0] = o.getIdHormiga();
-            data[index][1] = o.getIdCatalogoTipo  ();
-            data[index][2] = o.getIdCatalogoSexo  ();
-            data[index][3] = o.getIdCatalogoEstado();
-            data[index][4] = o.getNombre ();
+        for (HormigaDTO dto : lista) {
+            data[index][0] = dto.getIdHormiga();
+            data[index][1] = dto.getIdCatalogoTipo();
+            data[index][2] = dto.getIdCatalogoSexo();
+            data[index][3] = dto.getIdCatalogoEstado();
+            data[index][4] = dto.getNombre();
             index++;
         }
-
+    
+        // Crear y configurar la JTable
         JTable table = new JTable(data, header);
         table.setShowHorizontalLines(true);
         table.setGridColor(Color.lightGray);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
-
         table.setPreferredScrollableViewportSize(new Dimension(480, 150));
         table.setFillsViewportHeight(true);
-
+    
+        // Actualizar el panel que contiene la tabla
         pnlTabla.removeAll();
         pnlTabla.add(new JScrollPane(table));
-
+        pnlTabla.revalidate();
+        pnlTabla.repaint();
+    
+        // Agregar listener para detectar selección de filas
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = table.rowAtPoint(e.getPoint());
-                int col = table.columnAtPoint(e.getPoint());
-                if (row >= 0 && col >= 0) {
+                if (row >= 0) {
                     String strId = table.getModel().getValueAt(row, 0).toString();
                     id = Integer.parseInt(strId);
                     try {
                         oHormiga.getBy(id);
                         showDataRow();
-                    } catch (Exception ignored) {
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                     System.out.println("Tabla.Selected: " + strId);
                 }
             }
         });
     }
+    
     
 /************************
  * FormDesing : pat_mic/HormigaDTO

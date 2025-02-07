@@ -25,7 +25,7 @@ public  class Hormiga implements IHormiga{
         }
         return false;
     }
-    public List<HormigaDTO> getAll() throws Exception {
+    public int getAll() throws Exception {
          return bl.getAll();
     }
     public HormigaDTO getBy(Integer id) throws Exception {
