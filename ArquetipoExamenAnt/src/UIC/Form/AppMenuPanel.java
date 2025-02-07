@@ -15,7 +15,10 @@ import UIC.CustomerControl.PatButton;
 public class AppMenuPanel extends JPanel {
     public  PatButton   
             btnHome     = new PatButton(" Home"),
-            btnHomiga   = new PatButton(" Hormiga ");
+            btnHomiga   = new PatButton(" Hormiga "),
+            btnGenoAlimento = new PatButton("GenoAlimento"),
+            btnIngestoNativa = new PatButton("Ingesta Nativa");
+
 
     public AppMenuPanel() {
         customizeComponent();
@@ -34,6 +37,13 @@ public class AppMenuPanel extends JPanel {
             add(new JLabel(new ImageIcon(logo)));
             add(btnHome);
             add(btnHomiga);
+
+            add(btnGenoAlimento);
+            add(btnIngestoNativa);
+
+
+
+
         } catch (IOException e) {
             Style.showMsgError("No se encuentra la imagen");
         }

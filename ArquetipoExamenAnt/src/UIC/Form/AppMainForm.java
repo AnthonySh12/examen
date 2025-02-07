@@ -15,6 +15,8 @@ public class AppMainForm extends JFrame{
         customizeComponent(tilteApp);
         pnlMenu.btnHome.addActionListener(      e -> setPanel(new AppMainPanel())); 
         pnlMenu.btnHomiga.addActionListener ( e -> setPanel(new HormigaPanel())); 
+        pnlMenu.btnGenoAlimento.addActionListener(e -> setPanel(new GenoAlimento()));
+        //pnlMenu.btnIngestoNativa.addActionListener(e -> setPanel(new IngestaNativa));
        // pnlMenu.btnPersona.addActionListener(   e -> { IAStyle.showMsgError("mensaje de error");}); 
     }
 
